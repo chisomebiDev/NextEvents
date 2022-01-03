@@ -7,10 +7,7 @@ function HomePage() {
       <h1 className={styles.title}>The Home Page</h1>
       <ul className={styles.list}>
         <li>
-          <Link href="/portfolio">Portfolio</Link>
-        </li>
-        <li>
-          <Link href="/clients">Clients</Link>
+          <Link href="/events">Events</Link>
         </li>
       </ul>
     </div>
