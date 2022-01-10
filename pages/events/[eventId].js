@@ -4,6 +4,7 @@ import Head from "next/head";
 import EventSummary from "../../components/event-detail/event-summary";
 import ErrorAlert from "../../components/UI/error-alert";
 import { getEventById, getFeaturedEvents } from "../../helpers/api-util";
+import Comments from "../../components/input/comments";
 
 function EventDetail(props) {
   const { event } = props;
@@ -31,6 +32,7 @@ function EventDetail(props) {
         imageAlt={event.title}
       />
       <EventContent>{event.description}</EventContent>
+      <Comments eventId={event.id} />
     </>
   );
 }

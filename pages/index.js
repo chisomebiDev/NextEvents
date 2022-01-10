@@ -1,11 +1,11 @@
 import Head from "next/head";
 import EventList from "../components/events/EventList";
+import NewsletterRegistration from "../components/input/newsletter-registration";
 import { getFeaturedEvents } from "../helpers/api-util";
 import styles from "../styles/Home.module.css";
 
 function HomePage(props) {
   const { featuredEvents } = props;
-
   return (
     <>
       <Head>
@@ -16,8 +16,8 @@ function HomePage(props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <article className={styles.container}>
+        <NewsletterRegistration />
         <EventList items={featuredEvents} />
       </article>
     </>
