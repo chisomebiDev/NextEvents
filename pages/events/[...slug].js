@@ -1,16 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import Head from "next/head";
 import EventList from "../../components/events/EventList";
 import ResultsTitle from "../../components/events/results-title";
 import Button from "../../components/UI/Button";
 import ErrorAlert from "../../components/UI/error-alert";
-// import { getFilteredEvents } from "../../helpers/api-util";
 
 function SpecificEventDetail(props) {
-  // const { hasError, filteredEvents, date: dateYear } = props;
-  // const { year, month } = dateYear;
-
   const router = useRouter();
   const filterData = router.query.slug;
 
@@ -35,7 +32,11 @@ function SpecificEventDetail(props) {
   }, [data]);
 
   if (!events) {
-    return <h1 className="center">Loading...</h1>;
+    return (
+      <>
+        <h1 className="center">Loading...</h1>
+      </>
+    );
   }
 
   const [year, month] = [+filterData[0], +filterData[1]];
@@ -47,9 +48,26 @@ function SpecificEventDetail(props) {
     );
   });
 
+  const date = new Date(year, month - 1);
+  const humanReadableDate = new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+
+  const head = (
+    <Head>
+      <title>Events in {humanReadableDate}</title>
+      <meta
+        name="description"
+        content={`Find events for ${humanReadableDate}`}
+      />
+    </Head>
+  );
+
   if (isNaN(year) || isNaN(month) || month < 1 || month > 12 || error) {
     return (
       <>
+        {head}
         <ErrorAlert>
           <h1 className="center">Invalid Filter please adjust your values</h1>
         </ErrorAlert>
@@ -60,11 +78,10 @@ function SpecificEventDetail(props) {
     );
   }
 
-  const date = new Date(year, month - 1);
-
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+        {head}
         <ErrorAlert>
           <h1>No Events Found For Chosen Filter</h1>
         </ErrorAlert>
@@ -77,26 +94,11 @@ function SpecificEventDetail(props) {
 
   return (
     <>
+      {head}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>
   );
 }
-
-// export async function getServerSideProps(ctx) {
-//   const { params } = ctx;
-
-//   const filterData = params.slug;
-
-//   const [year, month] = [+filterData[0], +filterData[1]];
-
-//   if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
-//     return { props: { hasError: true }, notFound: true };
-//   }
-//   const filteredEvents = await getFilteredEvents({ year, month });
-//   return {
-//     props: { filteredEvents, date: { year, month } },
-//   };
-// }
 
 export default SpecificEventDetail;

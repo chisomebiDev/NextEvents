@@ -1,3 +1,4 @@
+import Head from "next/head";
 import EventList from "../components/events/EventList";
 import { getFeaturedEvents } from "../helpers/api-util";
 import styles from "../styles/Home.module.css";
@@ -6,9 +7,20 @@ function HomePage(props) {
   const { featuredEvents } = props;
 
   return (
-    <div className={styles.container}>
-      <EventList items={featuredEvents} />
-    </div>
+    <>
+      <Head>
+        <title>NextJS Events</title>
+        <meta
+          name="description"
+          content="Find events depending on your personality. App by Chisomebi using NExtJS"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <article className={styles.container}>
+        <EventList items={featuredEvents} />
+      </article>
+    </>
   );
 }
 

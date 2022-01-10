@@ -1,9 +1,15 @@
+import Head from "next/head";
 import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Next Events</title>
+        <meta name="description" content="Next JS Events App" />
+      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>
